@@ -1,0 +1,7 @@
+data/GuitarSet/
+venv/
+venv-not/
+data/spec_repr/
+.python-version
+data/__pycache__/
+model/__pycache__/
