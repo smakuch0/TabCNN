@@ -161,10 +161,12 @@ class TabCNN:
     
     ##HH
     def load_weights(self):
-        self.model.load_weights('/home/hc605/tab-cnn/model/saved/c 2021-10-08 19:58:59/0/' + "weights.h5")
+        self.model.load_weights('saved/c 2021-10-08 23:07:53/0/' + "weights.h5")
         
     def test(self):
+        print("\nvalidation_generator\n")
         self.X_test, self.y_gt = self.validation_generator[0]
+        print("\npredict\n")
         self.y_pred = self.model.predict(self.X_test)
         
     def save_predictions(self):
@@ -195,26 +197,30 @@ class TabCNN:
 ########### EXPERIMENT ###########
 ##################################
 
-tabcnn = TabCNN()
+def main():
+    tabcnn = TabCNN()
 
-print("logging model...")
-tabcnn.build_model()
-tabcnn.log_model()
-
-for fold in range(6):
-    print("\nfold " + str(fold))
-    tabcnn.partition_data(fold)
-    print("building model...")
+    print("logging model...")
     tabcnn.build_model()
-    print("training...")
-    tabcnn.train()
-    tabcnn.save_weights()
-    ##HH
-    #tabcnn.load_weights()
-    print("testing...")
-    tabcnn.test()
-    tabcnn.save_predictions()
-    print("evaluation...")
-    tabcnn.evaluate()
-print("saving results...")
-tabcnn.save_results_csv()
+    tabcnn.log_model()
+
+    for fold in range(6):
+        print("\nfold " + str(fold))
+        tabcnn.partition_data(fold)
+        print("building model...")
+        tabcnn.build_model()
+        print("training...")
+        tabcnn.train()
+        tabcnn.save_weights()
+        ##HH
+        #tabcnn.load_weights()
+        print("testing...")
+        tabcnn.test()
+        tabcnn.save_predictions()
+        print("evaluation...")
+        tabcnn.evaluate()
+    print("saving results...")
+    tabcnn.save_results_csv()
+
+if __name__ == "__main__":
+    main()
